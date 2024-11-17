@@ -1,13 +1,15 @@
 // Tab2Screen.tsx
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, Modal, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Modal, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
 const Tab2Screen = () => {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(true);
   const [currentStage, setCurrentStage] = useState(1);
   const [cft, setCft] = useState(70); // Valor simulado de CFT, puedes ajustarlo para probar
+  const [heartRates, setHeartRates] = useState({ FC1: '', FC2: '', FC3: '', Recovery: '' });
 
   const handleStart = () => {
     setModalVisible(false);
@@ -31,10 +33,11 @@ const Tab2Screen = () => {
     setCurrentStage(1);
     setCft(70); // Reiniciar el valor de CFT si es necesario
     setModalVisible(true);
+    setHeartRates({ FC1: '', FC2: '', FC3: '', Recovery: '' });
   };
 
-  const handleCancelTest = () => {
-    setModalVisible(false);
+  const handleInputChange = (value: string, field: string) => {
+    setHeartRates({ ...heartRates, [field]: value });
   };
 
   return (
@@ -56,10 +59,14 @@ const Tab2Screen = () => {
             <TouchableOpacity style={styles.button} onPress={handleStart}>
               <Text style={styles.buttonText}>Comenzar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancelTest}>
-              <Ionicons name="close-outline" size={24} color="white" />
-              <Text style={styles.buttonText}>Cancelar</Text>
+
+            <TouchableOpacity style={styles.button} onPress={handleStart}>
+               <Ionicons name="close-outline" size={24} color="white" />
+              <Text style={styles.buttonText}>Cancelar</Text>             
             </TouchableOpacity>
+
+
+
           </View>
         </View>
       </Modal>
@@ -68,8 +75,59 @@ const Tab2Screen = () => {
         <ScrollView contentContainerStyle={styles.stageContainer}>
           <Text style={styles.title}>Etapa {currentStage}</Text>
           <Text style={styles.content}>3 minutos de carga. Se debe registrar FC cada minuto.</Text>
-          <Text style={styles.content}>FC 1', FC 2', FC 3', FC 1' (Recuperación)</Text>
-          <Text style={styles.cftText}>CFT: {cft}%</Text>
+
+          {currentStage >= 1 && (
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>FC 1'</Text>
+              <TextInput
+                style={styles.input}
+                keyboardType='number-pad'
+                placeholder='Ingrese FC 1'
+                value={heartRates.FC1}
+                onChangeText={(value) => handleInputChange(value, 'FC1')}
+              />
+            </View>
+          )}
+
+          {currentStage >= 1 && (
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>FC 2'</Text>
+              <TextInput
+                style={styles.input}
+                keyboardType='number-pad'
+                placeholder='Ingrese FC 2'
+                value={heartRates.FC2}
+                onChangeText={(value) => handleInputChange(value, 'FC2')}
+              />
+            </View>
+          )}
+
+          {currentStage >= 1 && (
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>FC 3'</Text>
+              <TextInput
+                style={styles.input}
+                keyboardType='number-pad'
+                placeholder='Ingrese FC 3'
+                value={heartRates.FC3}
+                onChangeText={(value) => handleInputChange(value, 'FC3')}
+              />
+            </View>
+          )}
+
+          {currentStage >= 1 && (
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Recuperación (1' de reposo)</Text>
+              <TextInput
+                style={styles.input}
+                keyboardType='number-pad'
+                placeholder='Ingrese FC de recuperación'
+                value={heartRates.Recovery}
+                onChangeText={(value) => handleInputChange(value, 'Recovery')}
+              />
+            </View>
+          )}
+
           {currentStage < 3 ? (
             <TouchableOpacity style={[styles.button, styles.nextButton]} onPress={handleNextStage}>
               <Ionicons name="arrow-forward-outline" size={24} color="white" />
@@ -81,10 +139,10 @@ const Tab2Screen = () => {
               <Text style={styles.buttonText}>Terminar</Text>
             </TouchableOpacity>
           )}
-          <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancelTest}>
+
             <Ionicons name="close-outline" size={24} color="white" />
             <Text style={styles.buttonText}>Cancelar</Text>
-          </TouchableOpacity>
+
         </ScrollView>
       )}
 
@@ -161,6 +219,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  input: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    fontSize: 18,
+    padding: 5,
+    width: 100,
+    textAlign: 'center',
   },
   cftText: {
     fontSize: 18,
