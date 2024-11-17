@@ -1520,6 +1520,8 @@ PODS:
     - React-logger (= 0.75.4)
     - React-perflogger (= 0.75.4)
     - React-utils (= 0.75.4)
+  - RNAppleHealthKit (1.7.0):
+    - React
   - RNGestureHandler (2.20.2):
     - DoubleConversion
     - glog
@@ -1740,6 +1742,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNAppleHealthKit (from `../node_modules/react-native-health`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1878,6 +1881,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNAppleHealthKit:
+    :path: "../node_modules/react-native-health"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -1953,6 +1958,7 @@ SPEC CHECKSUMS:
   React-utils: cbe8b8b3d7b2ac282e018e46f0e7b25cdc87c5a0
   ReactCodegen: 4bcb34e6b5ebf6eef5cee34f55aa39991ea1c1f1
   ReactCommon: 6a952e50c2a4b694731d7682aaa6c79bc156e4ad
+  RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNGestureHandler: 511250b190a284388f9dd0d2e56c1df76f14cfb8
   RNReanimated: f42a5044d121d68e91680caacb0293f4274228eb
   RNScreens: de948b09c9a30f3ea52f9840dd6f8ce92b4e33d3
