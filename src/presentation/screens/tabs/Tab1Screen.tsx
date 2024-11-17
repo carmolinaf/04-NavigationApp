@@ -1,35 +1,61 @@
 // Tab1Screen.tsx
 import React from 'react';
-import { View, Text, Image, Button, StyleSheet, ScrollView } from 'react-native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 
-const Tab = createMaterialTopTabNavigator();
+import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export const Tab1Screen = () => {
+  const navigation = useNavigation();
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Pantalla Inicio1 */}
-      <View style={styles.card}>
-        <Text style={styles.title}>¿Qué es la capacidad física de trabajo?</Text>
-        <Text style={styles.content}>
-          Se refiere a la capacidad de realizar alguna actividad física con un rendimiento óptimo sin afectar la salud. 
-          Se conoce como "Capacidad Física de Trabajo" (CFT) y depende del fitness cardiorrespiratorio.
-        </Text>
-        <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.image} />
+      {/* Sección de Bienvenida */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.title}>Bienvenido</Text>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="information-circle-outline" size={24} color="black" />
+          <View style={styles.textContainer}>
+            <Text style={styles.optionText}>Información general sobre la aplicación</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-      {/* Pantalla Inicio2 */}
-      <View style={styles.card}>
-        <Text style={styles.title}>Importancia del CFT</Text>
-        <Text style={styles.content}>
-          Una baja CFT se relaciona con un mayor riesgo de desarrollar enfermedades crónicas no transmisibles (ECNT, diabetes, hipertensión, insulino resistencia, otras) y menor expectativa de vida si estas están presentes. 
-          Una Baja CFT aumenta el riesgo de enfermedades coronarias (EC), riesgo de hospitalización por COVID y riesgo de mortalidad por todas las causas. 
-          Un buen valor de CFT es un indicador de salud y protector de ECNT, EC y hospitalización por COVID.
-        </Text>
+
+      {/* Sección de Funcionalidades */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.subtitle}>Funcionalidades</Text>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="stats-chart-outline" size={24} color="black" />
+          <View style={styles.textContainer}>
+            <Text style={styles.optionText}>Revisión de estadísticas</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="heart-outline" size={24} color="black" />
+          <View style={styles.textContainer}>
+            <Text style={styles.optionText}>Monitoreo de frecuencia cardíaca</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-      {/* Pantalla Inicio3 */}
-      <View style={styles.card}>
-        <Text style={styles.title}>¿Estás listo para ponerte a prueba?</Text>
-        <Button title="Comenzar" onPress={() => {}} color="#4CAF50" />
+
+      {/* Sección de Prueba de CFT */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.subtitle}>Prueba de CFT</Text>
+      
+          <Ionicons name="play-outline" size={24} color="white" />
+          <Text style={styles.buttonText}>Comenzar</Text>
+
+      </View>
+
+      {/* Sección de Ajustes Rápidos */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.subtitle}>Ajustes Rápidos</Text>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="cog-outline" size={24} color="black" />
+          <View style={styles.textContainer}>
+            <Text style={styles.optionText}>Configuración de la aplicación</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -38,35 +64,54 @@ export const Tab1Screen = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: 20,
-  },
-  card: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    marginVertical: 10,
-    width: '100%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
+  },
+  sectionContainer: {
+    marginBottom: 30,
   },
   title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  content: {
-    fontSize: 16,
-    marginBottom: 10,
+  optionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginBottom: 15,
+    paddingVertical: 10,
   },
-  image: {
-    width: '100%',
-    height: 150,
+  textContainer: {
+    marginLeft: 10,
+    flex: 1,
+  },
+  optionText: {
+    fontSize: 18,
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#2196F3',
+    padding: 15,
     borderRadius: 10,
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  startButton: {
+    backgroundColor: '#4CAF50',
   },
 });
 

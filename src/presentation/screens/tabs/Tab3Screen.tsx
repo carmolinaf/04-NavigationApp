@@ -1,100 +1,106 @@
 // Tab3Screen.tsx
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const testHistory = [
-  { id: '1', date: '01/01/24', cft: 65 },
-  { id: '2', date: '15/02/24', cft: 70 },
-  { id: '3', date: '01/03/24', cft: 68 },
-  { id: '4', date: '15/03/24', cft: 72 },
-];
 
 const Tab3Screen = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Histórico</Text>
-      <FlatList
-        data={testHistory}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.historyItem}>
-            <View style={styles.historyTextContainer}>
-              <Text style={styles.cftLabel}>CFT</Text>
-              <Text style={styles.dateText}>{item.date}</Text>
-            </View>
-            <View style={styles.cftValueContainer}>
-              <Text style={styles.cftValue}>{item.cft}%</Text>
-              <Image source={{ uri: 'https://via.placeholder.com/50' }} style={styles.cftImage} />
-            </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      {/* Histórico de CFT */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.title}>Histórico de CFT</Text>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="analytics-outline" size={24} color="black" />
+          <View style={styles.textContainer}>
+            <Text style={styles.optionText}>CFT</Text>
+            <Text style={styles.dateText}>01/01/24</Text>
           </View>
-        )}
-      />
-
-      <View style={styles.dashboardContainer}>
-        <Text style={styles.dashboardTitle}>Dashboard resumen</Text>
-        <Text>EJE Y: Valor CFT</Text>
-        <Text>EJE X: Fecha</Text>
-        <Image source={{ uri: 'https://via.placeholder.com/300x150' }} style={styles.dashboardImage} />
+          <Text style={styles.cftValue}>65%</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="analytics-outline" size={24} color="black" />
+          <View style={styles.textContainer}>
+            <Text style={styles.optionText}>CFT</Text>
+            <Text style={styles.dateText}>15/02/24</Text>
+          </View>
+          <Text style={styles.cftValue}>70%</Text>
+        </TouchableOpacity>
       </View>
-    </View>
+
+      {/* Dashboard Resumen */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.subtitle}>Dashboard Resumen</Text>
+        <TextInput placeholder="EJE Y: Valor CFT" style={styles.input} />
+        <TextInput placeholder="EJE X: Fecha" style={styles.input} />
+      </View>
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Guardar</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
     backgroundColor: '#fff',
+  },
+  sectionContainer: {
+    marginBottom: 30,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  historyItem: {
+  subtitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  optionContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+    marginBottom: 15,
+    paddingVertical: 10,
   },
-  historyTextContainer: {
-    flexDirection: 'column',
+  textContainer: {
+    marginLeft: 10,
+    flex: 1,
   },
-  cftLabel: {
+  optionText: {
     fontSize: 18,
-    fontWeight: 'bold',
   },
   dateText: {
     fontSize: 16,
     color: '#777',
   },
-  cftValueContainer: {
-    alignItems: 'center',
-  },
   cftValue: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  cftImage: {
-    width: 50,
-    height: 50,
-    marginTop: 10,
+  input: {
+    fontSize: 18,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    paddingVertical: 5,
   },
-  dashboardContainer: {
-    marginTop: 30,
+  button: {
+    backgroundColor: '#2196F3',
+    padding: 15,
+    borderRadius: 10,
     alignItems: 'center',
   },
-  dashboardTitle: {
-    fontSize: 20,
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  dashboardImage: {
-    width: 300,
-    height: 150,
-    marginTop: 10,
   },
 });
 

@@ -1,6 +1,8 @@
 // Tab2Screen.tsx
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, Modal, ScrollView, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Modal, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const Tab2Screen = () => {
   const [modalVisible, setModalVisible] = useState(true);
@@ -31,6 +33,10 @@ const Tab2Screen = () => {
     setModalVisible(true);
   };
 
+  const handleCancelTest = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -47,7 +53,13 @@ const Tab2Screen = () => {
             <Text style={styles.content}>FCR: Recuéstate 5 minutos y registra FCR. Mide tu frecuencia cardíaca en reposo.</Text>
             <Text style={styles.content}>Sube y baja: Sube con pie derecho. Baja con pie derecho. Sigue el ritmo del sonido. Cada sonido es un paso.</Text>
             <Text style={styles.content}>¡Ahora practica!</Text>
-            <Button title="Comenzar" onPress={handleStart} color="#4CAF50" />
+            <TouchableOpacity style={styles.button} onPress={handleStart}>
+              <Text style={styles.buttonText}>Comenzar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancelTest}>
+              <Ionicons name="close-outline" size={24} color="white" />
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -59,26 +71,55 @@ const Tab2Screen = () => {
           <Text style={styles.content}>FC 1', FC 2', FC 3', FC 1' (Recuperación)</Text>
           <Text style={styles.cftText}>CFT: {cft}%</Text>
           {currentStage < 3 ? (
-            <Button title="Siguiente" onPress={handleNextStage} color="#4CAF50" />
+            <TouchableOpacity style={[styles.button, styles.nextButton]} onPress={handleNextStage}>
+              <Ionicons name="arrow-forward-outline" size={24} color="white" />
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
           ) : (
-            <Button title="Terminar" onPress={handleFinishTest} color="#f44336" />
+            <TouchableOpacity style={[styles.button, styles.finishButton]} onPress={handleFinishTest}>
+              <Ionicons name="checkmark-outline" size={24} color="white" />
+              <Text style={styles.buttonText}>Terminar</Text>
+            </TouchableOpacity>
           )}
+          <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancelTest}>
+            <Ionicons name="close-outline" size={24} color="white" />
+            <Text style={styles.buttonText}>Cancelar</Text>
+          </TouchableOpacity>
         </ScrollView>
       )}
 
       {currentStage === 4 && (
         <View style={styles.resultsContainer}>
           <Text style={styles.title}>Resultados</Text>
-          <Text style={styles.content}>Semáforo de la salud</Text>
-          <Text style={styles.content}>CFT: {cft}% - Valor y clasificación</Text>
-          <Text style={styles.content}>PC: Valor y clasificación</Text>
-          <Text style={styles.content}>IMC: Valor y clasificación</Text>
+          <TouchableOpacity style={styles.optionContainer}>
+            <Ionicons name="heart-outline" size={24} color="black" />
+            <View style={styles.textContainer}>
+              <Text style={styles.optionText}>CFT: {cft}% - Valor y clasificación</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.optionContainer}>
+            <Ionicons name="barbell-outline" size={24} color="black" />
+            <View style={styles.textContainer}>
+              <Text style={styles.optionText}>PC: Valor y clasificación</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.optionContainer}>
+            <Ionicons name="body-outline" size={24} color="black" />
+            <View style={styles.textContainer}>
+              <Text style={styles.optionText}>IMC: Valor y clasificación</Text>
+            </View>
+          </TouchableOpacity>
           <View style={styles.observationCard}>
             <Text style={styles.observationTitle}>Observación</Text>
             <Text>Un buen valor de CFT es un indicador de salud y protector de ECNT, EC y hospitalización por COVID.</Text>
-            <Button title="Infórmate aquí" onPress={() => {}} />
+            <TouchableOpacity style={styles.linkButton}>
+              <Text style={styles.linkButtonText}>Infórmate aquí</Text>
+            </TouchableOpacity>
           </View>
-          <Button title="Volver a empezar" onPress={handleRestartTest} color="#4CAF50" />
+          <TouchableOpacity style={[styles.button, styles.restartButton]} onPress={handleRestartTest}>
+            <Ionicons name="refresh-outline" size={24} color="white" />
+            <Text style={styles.buttonText}>Volver a empezar</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -91,6 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#fff',
   },
   modalContainer: {
     flex: 1,
@@ -129,6 +171,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  optionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginBottom: 15,
+    paddingVertical: 10,
+  },
+  textContainer: {
+    marginLeft: 10,
+    flex: 1,
+  },
+  optionText: {
+    fontSize: 18,
+  },
   observationCard: {
     backgroundColor: '#fff',
     padding: 20,
@@ -144,6 +201,40 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+  linkButton: {
+    marginTop: 10,
+  },
+  linkButtonText: {
+    color: '#2196F3',
+    fontWeight: 'bold',
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#2196F3',
+    padding: 15,
+    borderRadius: 10,
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  nextButton: {
+    backgroundColor: '#4CAF50',
+  },
+  finishButton: {
+    backgroundColor: '#f44336',
+  },
+  restartButton: {
+    backgroundColor: '#4CAF50',
+  },
+  cancelButton: {
+    backgroundColor: '#f44336',
   },
 });
 

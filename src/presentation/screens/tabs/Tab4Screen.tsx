@@ -1,6 +1,8 @@
 // Tab4Screen.tsx
 import React, { useState } from 'react';
-import { View, Text, TextInput, ScrollView, Button, StyleSheet, Modal, Switch, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, ScrollView, StyleSheet, Switch, TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const Tab4Screen = () => {
   const [sexo, setSexo] = useState('');
@@ -12,9 +14,15 @@ const Tab4Screen = () => {
       {/* Perfil General */}
       <View style={styles.sectionContainer}>
         <Text style={styles.title}>Perfil</Text>
-        <TextInput placeholder="Fecha de nacimiento" style={styles.input} />
-        <TextInput placeholder="Email" style={styles.input} />
-        <Text>Sexo</Text>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="person-outline" size={24} color="black" />
+          <TextInput placeholder="Fecha de nacimiento" style={styles.input} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="mail-outline" size={24} color="black" />
+          <TextInput placeholder="Email" style={styles.input} />
+        </TouchableOpacity>
+        <Text style={styles.subtitle}>Sexo</Text>
         <View style={styles.radioContainer}>
           <TouchableOpacity style={styles.radioButton} onPress={() => setSexo('hombre')}>
             <View style={[styles.radioCircle, sexo === 'hombre' && styles.selectedRadioCircle]} />
@@ -27,10 +35,12 @@ const Tab4Screen = () => {
         </View>
         {sexo.toLowerCase() === 'mujer' && (
           <View style={styles.sectionContainer}>
-            <Text style={styles.title}>Mujer</Text>
-            <TextInput placeholder="Fecha de última regla (FUR)" style={styles.input} />
-            <Text>Métodos anticonceptivos</Text>
-            {/* Puedes agregar aquí Checkboxes para los métodos anticonceptivos */}
+            <Text style={styles.subtitle}>Mujer</Text>
+            <TouchableOpacity style={styles.optionContainer}>
+              <Ionicons name="calendar-outline" size={24} color="black" />
+              <TextInput placeholder="Fecha de última regla (FUR)" style={styles.input} />
+            </TouchableOpacity>
+            <Text style={styles.subtitle}>Métodos anticonceptivos</Text>
             <TextInput placeholder="Indicar nombre del anticonceptivo" style={styles.input} />
           </View>
         )}
@@ -38,15 +48,15 @@ const Tab4Screen = () => {
 
       {/* Enfermedades */}
       <View style={styles.sectionContainer}>
-        <Text>Enfermedad</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text>¿Presenta alguna?</Text>
-          <Switch value={tieneEnfermedad} onValueChange={setTieneEnfermedad} />
+        <Text style={styles.subtitle}>Enfermedad</Text>
+        <View style={styles.optionContainerSwitch}>
+          <Ionicons name="medkit-outline" size={24} color="black" />
+          <Text style={styles.optionText}>¿Presenta alguna?</Text>
+          <Switch value={tieneEnfermedad} onValueChange={setTieneEnfermedad} style={styles.switch} />
         </View>
         {tieneEnfermedad && (
           <View style={styles.sectionContainer}>
-            <Text style={styles.title}>Enfermedades</Text>
-            {/* Puedes agregar aquí Checkboxes para las enfermedades */}
+            <Text style={styles.subtitle}>Enfermedades</Text>
             <TextInput placeholder="Nombre de la(s) enfermedad(es)" style={styles.input} />
           </View>
         )}
@@ -54,33 +64,28 @@ const Tab4Screen = () => {
 
       {/* Medidas */}
       <View style={styles.sectionContainer}>
-        <Text style={styles.title}>Medidas</Text>
-        <TextInput placeholder="Peso (Kg)" style={styles.input} />
-        <TextInput placeholder="Estatura (Cm)" style={styles.input} />
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text>Perímetro cintura</Text>
-          <Button title="ℹ️" onPress={() => setModalVisible(true)} />
+        <Text style={styles.subtitle}>Medidas</Text>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="barbell-outline" size={24} color="black" />
+          <TextInput placeholder="Peso (Kg)" style={styles.input} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionContainer}>
+          <Ionicons name="resize-outline" size={24} color="black" />
+          <TextInput placeholder="Estatura (Cm)" style={styles.input} />
+        </TouchableOpacity>
+        <View style={styles.optionContainerSwitch}>
+          <Ionicons name="ruler-outline" size={24} color="black" />
+          <Text style={styles.optionText}>Perímetro cintura</Text>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Ionicons name="information-circle-outline" size={24} color="black" />
+          </TouchableOpacity>
         </View>
         <TextInput placeholder="Cm" style={styles.input} />
       </View>
 
-      {/* Modal de Información de Medidas */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.title}>¿Cómo tomar las medidas?</Text>
-            <Text>Este es un video explicativo en donde se dan las indicaciones para tomar las medidas de forma más precisa.</Text>
-            <Button title="OK" onPress={() => setModalVisible(false)} />
-          </View>
-        </View>
-      </Modal>
-
-      <Button title="Guardar" onPress={() => {}} />
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Guardar</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -92,23 +97,48 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   sectionContainer: {
-    marginBottom: 20,
+    marginBottom: 30,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
     marginBottom: 10,
   },
-  input: {
+  optionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    marginBottom: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    borderBottomColor: '#ddd',
+    marginBottom: 15,
+    paddingVertical: 10,
+  },
+  optionContainerSwitch: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginBottom: 15,
+    paddingVertical: 10,
+  },
+  optionText: {
+    fontSize: 18,
+    marginLeft: 10,
+    flex: 1,
+  },
+  input: {
+    fontSize: 18,
+    marginLeft: 10,
+    flex: 1,
   },
   radioContainer: {
     flexDirection: 'row',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   radioButton: {
     flexDirection: 'row',
@@ -131,18 +161,19 @@ const styles = StyleSheet.create({
   radioLabel: {
     fontSize: 16,
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  switch: {
+    marginLeft: 'auto',
   },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'white',
+  button: {
+    backgroundColor: '#2196F3',
+    padding: 15,
     borderRadius: 10,
     alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

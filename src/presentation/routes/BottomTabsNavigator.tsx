@@ -41,7 +41,7 @@ export const BottomTabNavigator = () => {
         <Tab.Screen 
         name="Tab5" 
         options={{ title:'Configuración', tabBarIcon: ({ color }) => ( <IonIcon name="cog-outline" color={ color } /> ) }} 
-        component={ Tab6Screen } />
+        component={ Tab5Screen } />
 
     </Tab.Navigator>
   );

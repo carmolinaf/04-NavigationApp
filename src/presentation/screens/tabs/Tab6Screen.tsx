@@ -1,4 +1,4 @@
-// Tab6Screen.tsx
+// Tab6Screen.tsx  FRECUENCIA CARDIACA
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
 import AppleHealthKit, { HealthInputOptions, HealthKitPermissions, HealthValue } from 'react-native-health';
@@ -41,6 +41,11 @@ const Tab6Screen = () => {
     });
   };
 
+  const cancelMeasuringHeartRate = () => {
+    setIsMeasuring(false);
+    setHeartRate(null);
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Monitor de Frecuencia Cardíaca</Text>
@@ -52,6 +57,13 @@ const Tab6Screen = () => {
         onPress={startMeasuringHeartRate}
         disabled={isMeasuring}
       />
+      {isMeasuring && (
+        <Button
+          title="Cancelar"
+          onPress={cancelMeasuringHeartRate}
+          color="red"
+        />
+      )}
     </ScrollView>
   );
 };
